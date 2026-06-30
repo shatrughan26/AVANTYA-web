@@ -31,8 +31,7 @@ const Services = () => {
   };
 
   return (
-    /* MASTER CONTAINER: Combines entire section into a single opaque frosted-glass system to block out background text */
-    <div >
+    <div className="relative w-full overflow-hidden">
       
       {/* Dynamic Blue Aura Glow Effect hitting the container background layer */}
       <div 
@@ -43,13 +42,14 @@ const Services = () => {
         }}
       />
 
-      <div className="grid grid-cols-1 lg:grid-cols-12 gap-12 items-start relative z-10">
+      {/* INNER GRID: Generous horizontal padding (px) and vertical padding (py) to keep content safe from outer container borders */}
+      <div className="grid grid-cols-1 lg:grid-cols-12 gap-8 lg:gap-12 items-start relative z-10 px-6 sm:px-8 md:px-12 lg:px-16 py-8 md:py-12">
         
         {/* LEFT COLUMN: FIXED NAVIGATION PANEL */}
-        <div className="lg:col-span-4 space-y-4">
-          <div className="space-y-2 mb-8">
-            <span className="text-sm font-semibold tracking-widest text-blue-500 uppercase">Capabilities</span>
-            <h2 className="text-4xl font-bold text-white tracking-tight">Our Services</h2>
+        <div className="lg:col-span-4 space-y-6">
+          <div className="space-y-2 mb-6">
+            <span className="text-xs md:text-sm font-semibold tracking-widest text-blue-500 uppercase">Capabilities</span>
+            <h2 className="text-3xl md:text-4xl font-bold text-white tracking-tight">Our Services</h2>
           </div>
 
           <div className="flex flex-col gap-3">
@@ -68,7 +68,7 @@ const Services = () => {
                 >
                   <div className={`absolute left-0 top-0 bottom-0 w-1 bg-blue-500 transition-transform duration-300 ${isSelected ? 'scale-y-100' : 'scale-y-0'}`} />
                   
-                  <h4 className={`text-lg font-bold transition-colors duration-300 ${isSelected ? 'text-white' : 'text-zinc-400 group-hover:text-zinc-200'}`}>
+                  <h4 className={`text-base md:text-lg font-bold transition-colors duration-300 ${isSelected ? 'text-white' : 'text-zinc-400 group-hover:text-zinc-200'}`}>
                     {item.label}
                   </h4>
                   <p className="text-zinc-500 text-xs mt-1 font-light tracking-wide">
@@ -81,8 +81,7 @@ const Services = () => {
         </div>
 
         {/* RIGHT COLUMN: DYNAMIC CONTENT CANVAS SCREEN */}
-        {/* Made transparent with subtle border separation since parent container provides opacity */}
-        <div className="lg:col-span-8 border border-white/5 rounded-[2rem] bg-white/[0.01] p-8 md:p-12 min-h-[500px] relative overflow-hidden flex flex-col justify-center">
+        <div className="lg:col-span-8 border border-white/5 rounded-2xl md:rounded-[2rem] bg-white/[0.01] p-6 md:p-10 min-h-[450px] lg:min-h-[550px] relative overflow-hidden flex flex-col justify-center">
           <div key={activeTab} className="animate-[fadeInSlide_0.4s_ease-out] relative z-10">
             {renderActiveService()}
           </div>
