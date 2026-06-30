@@ -56,7 +56,7 @@ const App = () => {
           id="services"
           className="w-full max-w-8xl mx-auto px-6 py-20 md:px-12 relative z-10"
         >
-          <div className="w-full rounded-[3rem] border border-white/10 bg-slate-950/40 backdrop-blur-2xl py-4 md:py-6 shadow-[0_0_50px_rgba(0,0,0,0.6)]">
+          <div>
             <Services />
           </div>
         </div>
