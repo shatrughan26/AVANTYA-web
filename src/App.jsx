@@ -6,7 +6,7 @@ import Products from "./Products/Products";
 {
   /* Cleanly imported your 3-image showcase file */
 }
-import Services from "./Services/Services";
+import Services from "./Services/service";
 {
   /* Cleanly imported your tabbed capabilities dashboard */
 }
