@@ -2,6 +2,7 @@ import React from "react";
 import Navbar from "./Navbar/Navbar";
 import DotSphere from "./Components/Sphere";
 import Intro from "../src/Introduction/Intro";
+import Products from "./Products/Products";
 {
   /* Cleanly imported your 3-image showcase file */
 }
@@ -58,6 +59,12 @@ const App = () => {
           <div className="w-full rounded-[3rem] border border-white/10 bg-slate-950/40 backdrop-blur-2xl py-4 md:py-6 shadow-[0_0_50px_rgba(0,0,0,0.6)]">
             <Services />
           </div>
+        </div>
+
+        {/* SECTION: CORE PRODUCTS ECOSYSTEM */}
+        {/* UPDATED: Wrapper matching outer spacing constraints exactly, while keeping internal layouts clean */}
+        <div id="products" className="relative w-full bg-black">
+          <Products />
         </div>
 
         {/* SECTION 3: ABOUT DETAIL BLOCK */}
