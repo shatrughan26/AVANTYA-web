@@ -32,7 +32,7 @@ const Services = () => {
 
   return (
     /* MASTER CONTAINER: Combines entire section into a single opaque frosted-glass system to block out background text */
-    <div className="w-full max-w-7xl mx-auto rounded-[3rem] border border-white/10 bg-slate-950/70 backdrop-blur-2xl px-8 py-16 md:p-16 shadow-2xl relative overflow-hidden">
+    <div >
       
       {/* Dynamic Blue Aura Glow Effect hitting the container background layer */}
       <div 
