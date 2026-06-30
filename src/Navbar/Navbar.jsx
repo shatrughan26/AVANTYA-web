@@ -4,14 +4,15 @@ export default function Navbar() {
   const [isOpen, setIsOpen] = useState(false);
   const [activeItem, setActiveItem] = useState('AMANTYA.AI');
 
-  const navItems = ['AMANTYA.AI', 'ABOUT', 'LOCATION'];
+  // Tracking all sections, including the SHOWCASE (Intro component wrapper)
+  const navItems = ['AMANTYA.AI', 'SHOWCASE', 'SERVICES', 'PRODUCTS', 'ABOUT', 'LOCATION'];
 
   // Router Engine Anchor Link Converter
   const handleScroll = (item) => {
     setActiveItem(item);
     setIsOpen(false); 
 
-    // Match 'AMANTYA.AI' cleanly to your '#home' component block ID
+    // Route logic mapping
     const targetId = item === 'AMANTYA.AI' ? 'home' : item.toLowerCase();
     const element = document.getElementById(targetId);
 
@@ -21,7 +22,7 @@ export default function Navbar() {
   };
 
   return (
-    <nav className="fixed top-4 left-1/2 -translate-x-1/2 w-[92%] max-w-6xl z-50 rounded-2xl border border-white bg-white/[0.02] px-6 py-3 shadow-[0_8px_32px_0_rgba(0,0,0,0.5)] backdrop-blur-md transition-all duration-300">
+    <nav className="fixed top-4 left-1/2 -translate-x-1/2 w-[92%] max-w-7xl z-50 rounded-2xl border border-white bg-white/[0.02] px-6 py-3 shadow-[0_8px_32px_0_rgba(0,0,0,0.5)] backdrop-blur-md transition-all duration-300">
       <div className="flex items-center justify-between">
         
         {/* Logo / Brand Mark */}
@@ -46,7 +47,7 @@ export default function Navbar() {
                   : 'text-zinc-400 hover:text-white hover:bg-white/5'
               }`}
             >
-              {item}
+              {item === 'SHOWCASE' ? 'INTRO' : item}
             </button>
           ))}
         </div>
@@ -69,13 +70,13 @@ export default function Navbar() {
         </div>
       </div>
 
-      {/* Mobile Drawer Drawer Context */}
+      {/* Mobile Drawer Context */}
       <div
         className={`md:hidden overflow-hidden transition-all duration-300 ease-in-out ${
-          isOpen ? 'max-h-[250px] opacity-100 mt-4' : 'max-h-0 opacity-0 pointer-events-none'
+          isOpen ? 'max-h-[380px] opacity-100 mt-4' : 'max-h-0 opacity-0 pointer-events-none'
         }`}
       >
-        <div className="flex flex-col gap-2 rounded-xl bg-zinc-950/90 p-3 border border-white/5 shadow-inner backdrop-blur-lg">
+        <div className="flex flex-col gap-2 rounded-xl bg-zinc-950/90 p-3 border border-white/5 shadow-[0_4px_20px_rgba(0,0,0,0.8)] backdrop-blur-lg">
           {navItems.map((item) => (
             <button
               key={item}
@@ -86,7 +87,7 @@ export default function Navbar() {
                   : 'text-zinc-400 hover:text-white hover:bg-white/5'
               }`}
             >
-              {item}
+              {item === 'SHOWCASE' ? 'INTRO' : item}
             </button>
           ))}
         </div>
