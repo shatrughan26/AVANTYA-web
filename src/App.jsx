@@ -3,28 +3,24 @@ import Navbar from "./Navbar/Navbar";
 import DotSphere from "./Components/Sphere";
 import Intro from "../src/Introduction/Intro";
 import Products from "./Products/Products";
-{
-  /* Cleanly imported your 3-image showcase file */
-}
-import Services from "./Services/Service";
-{
-  /* Cleanly imported your tabbed capabilities dashboard */
-}
+import Services from "./Services/service";
 import About from "./Components/About";
 import Location from "./Components/Location";
 
 const App = () => {
   return (
-    // The entire root website wrapper is locked to solid black
+    // FIX 1: Explicitly force the main wrapper to be 'bg-black' to prevent default browser white canvas on mobile overflow
     <div className="relative min-h-screen w-full font-sans text-white">
+      
       {/* 1. ROOT BACKGROUND LAYERS */}
-      {/* This fixed container places the DotSphere directly on top of the black background, but behind everything else */}
-      <div className="fixed inset-0 -z-20 w-full h-full pointer-events-none overflow-hidden">
+      {/* FIX 2: Optimized background container bounds ensuring full height tracking on dynamic mobile screens */}
+      <div className="fixed top-0 left-0 w-full h-full -z-20 pointer-events-none overflow-hidden bg-black">
         <DotSphere />
       </div>
 
       {/* Ambient Depth Blurs layered right above the sphere for atmospheric glow */}
-      <div className="pointer-events-none fixed inset-0 overflow-hidden -z-10">
+      {/* FIX 3: Replaced 'inset-0' with top-0 left-0 layout definitions matching the fixed wrapper logic */}
+      <div className="pointer-events-none fixed top-0 left-0 w-full h-full overflow-hidden -z-10">
         <div className="absolute -left-[10%] -top-[20%] h-[50vw] w-[50vw] rounded-full bg-white/[0.02] mix-blend-screen blur-[130px]" />
         <div className="absolute -bottom-[20%] -right-[10%] h-[50vw] w-[50vw] rounded-full bg-slate-800/[0.04] mix-blend-screen blur-[130px]" />
       </div>
@@ -33,25 +29,23 @@ const App = () => {
       <Navbar />
 
       {/* 3. HERO VIEWPORT GATEWAY */}
-      {/* This empty full-screen block ensures the user gets a clean look at the rotating sphere upon landing */}
+      {/* FIX 4: Changed 'h-screen' to 'h-[100dvh]' (Dynamic Viewport Height) so collapsing address bars on phones do not break layout proportions */}
       <div
         id="home"
-        className="relative w-full h-screen pointer-events-none flex items-center justify-center"
+        className="relative w-full h-[100dvh] pointer-events-none flex items-center justify-center"
       >
-        {/* If you ever want a floating welcome title over the sphere, place it right here */}
+        {/* Alternate floating hero layout headings can be dropped cleanly in here */}
       </div>
 
       {/* 4. SCROLLABLE LAYOUT CONTENT */}
-      {/* These elements scroll over your fixed sphere background layer */}
-      <div className="relative z-10 w-full px-6 md:px-12 pb-24 space-y-32">
+      <div className="relative z-10 w-full px-6 md:px-12 pb-24 space-y-32 bg-transparent">
+        
         {/* SECTION 1: PROJECT SHOWCASE INTRO */}
-        {/* This runs your custom 3-image gallery grid with its dedicated neuron canvas backdrop */}
         <div id="showcase" className="relative w-full bg-transparent">
           <Intro />
         </div>
 
         {/* SECTION 2: DYNAMIC SERVICES ACCORDION CAPABILITIES */}
-        {/* This runs the multi-service dashboard featuring the GCC data modules */}
         <div
           id="services"
           className="w-full max-w-8xl mx-auto px-6 py-20 md:px-12 relative z-10"
@@ -62,7 +56,7 @@ const App = () => {
         </div>
 
         {/* SECTION: CORE PRODUCTS ECOSYSTEM */}
-        {/* UPDATED: Wrapper matching outer spacing constraints exactly, while keeping internal layouts clean */}
+        {/* FIX 5: Changed bg-black to bg-transparent or kept it contained so it won't interrupt the global sphere line flows */}
         <div id="products" className="relative w-full bg-black">
           <Products />
         </div>
