@@ -18,7 +18,8 @@ const About = () => {
           
           {/* Left Column: Tech Concept Paragraphs */}
           <div className="flex-1 flex flex-col justify-between space-y-6 text-left">
-            <div className="space-y-6 text-zinc-400 text-base md:text-lg leading-relaxed font-light">
+            {/* Main prose paragraphs stay justified as long blocks look great this way */}
+            <div className="space-y-6 text-zinc-400 text-base md:text-lg leading-relaxed font-light text-justify">
               <p>
                 <strong className="text-white font-semibold">Amantya Technologies</strong> is a leading product engineering and system integration company operating at the absolute forefront of digital transformation. With structural operations spanning the <strong className="text-white font-medium">USA, Canada, and India</strong> (Gurugram, Bangalore & Nagpur), we act as a global catalyst for enterprise scaling.
               </p>
@@ -55,21 +56,35 @@ const About = () => {
               <div className="h-[1px] w-8 bg-blue-500 mb-6" />
               <h3 className="text-lg font-bold tracking-tight text-white uppercase">Core Pillars</h3>
               
-              {/* Core Infrastructure Subsections */}
-              <ul className="mt-6 space-y-4 text-xs font-mono tracking-wide text-zinc-400">
-                <li className="flex items-start gap-3">
-                  <span className="text-white font-bold whitespace-nowrap">PRODUCT ENGINEERING</span>
-                  <span>End-to-end prototyping, implementation, and scaling of cloud-native hardware and software.</span>
-                </li>
-                <li className="flex items-start gap-3">
-                  <span className="text-white font-bold whitespace-nowrap">SYSTEM INTEGRATION</span>
-                  <span>Unifying edge telemetry, cellular cores, and legacy backplanes into cohesive ecosystems.</span>
-                </li>
-                <li className="flex items-start gap-3">
-                  <span className="text-white font-bold whitespace-nowrap">NEXT-GEN TECH</span>
-                  <span>Deploying production-ready 5G topologies, predictive AI models, and secure IoT infrastructure.</span>
-                </li>
-              </ul>
+              {/* FIXED: Core Infrastructure Subsections stacked with standard left alignment */}
+              <div className="mt-6 space-y-6 text-left">
+                <div className="space-y-1">
+                  <span className="text-blue-400 font-mono text-[11px] font-bold tracking-wider block">
+                    [01] PRODUCT ENGINEERING
+                  </span>
+                  <p className="text-zinc-400 font-sans text-xs leading-relaxed font-light">
+                    End-to-end prototyping, implementation, and scaling of cloud-native hardware and software solutions globally.
+                  </p>
+                </div>
+
+                <div className="space-y-1">
+                  <span className="text-blue-400 font-mono text-[11px] font-bold tracking-wider block">
+                    [02] SYSTEM INTEGRATION
+                  </span>
+                  <p className="text-zinc-400 font-sans text-xs leading-relaxed font-light">
+                    Unifying distributed edge telemetry, private cellular cores, and legacy backplanes into cohesive production environments.
+                  </p>
+                </div>
+
+                <div className="space-y-1">
+                  <span className="text-blue-400 font-mono text-[11px] font-bold tracking-wider block">
+                    [03] NEXT-GEN TECH
+                  </span>
+                  <p className="text-zinc-400 font-sans text-xs leading-relaxed font-light">
+                    Deploying production-ready 5G topologies, high-throughput predictive AI models, and ultra-secure IoT network fabrics.
+                  </p>
+                </div>
+              </div>
             </div>
 
             {/* Bottom Meta Details Tag */}
