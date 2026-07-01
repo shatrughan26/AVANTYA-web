@@ -29,33 +29,36 @@ const SphereText = () => {
   }, []);
 
   const current = techPhrases[currentPhraseIndex];
-  const sizeClasses = "text-[1.6rem] sm:text-[2.4rem] md:text-[3.2rem] lg:text-[3.8rem]";
+  
+  // Refined responsive sizing matrix for cleaner text scaling on small viewports
+  const sizeClasses = "text-xl sm:text-3xl md:text-4xl lg:text-5xl";
 
   return (
-    <div className="absolute inset-0 z-20 flex flex-col items-center justify-center text-center px-4 max-w-5xl mx-auto pointer-events-none">
-      <h1 className={`font-serif font-bold tracking-tight text-zinc-200 leading-[1.15] ${sizeClasses}`}>
-        {/* Line 1 - always single line, never moves */}
-        <span className="block whitespace-nowrap">
+    <div className="absolute inset-0 z-20 flex flex-col items-center justify-center text-center px-6 w-full max-w-5xl mx-auto pointer-events-none">
+      <h1 className={`font-serif font-bold tracking-tight text-zinc-200 leading-snug sm:leading-relaxed ${sizeClasses}`}>
+        
+        {/* Line 1 - Now wraps beautifully on mobile and stands clean */}
+        <span className="block mb-2 sm:mb-4">
           Reimagining tech for real-world impact,
         </span>
 
-        {/* Line 2 - "engineered for" stays static, only the phrase box reserves space */}
-        <span className="mt-4 flex flex-wrap items-baseline justify-center gap-x-3 font-black">
-          <span className="whitespace-nowrap">engineered for</span>
+        {/* Line 2 - Uses standard inline wrapping on mobile, flex on desktop if needed */}
+        <span className="block font-black">
+          <span className="inline-block mr-2 sm:mr-3">engineered for</span>
 
-          {/* Only THIS box reserves max width — "engineered for" never shifts */}
-          <span className="relative inline-grid place-items-center">
-            {/* Invisible placeholder locks width/height to the longest phrase */}
+          {/* This box reserves space for the layout engine safely */}
+          <span className="relative inline-grid place-items-center vertical-align-middle">
+            {/* Invisible placeholder handles space management without side-clipping */}
             <span
               aria-hidden="true"
-              className="col-start-1 row-start-1 invisible whitespace-nowrap"
+              className="col-start-1 row-start-1 invisible whitespace-pre sm:whitespace-nowrap"
             >
               {longestPhrase.text}.
             </span>
 
-            {/* Visible animated phrase, centered inside the locked box */}
+            {/* Visible dynamic changing phrase */}
             <span
-              className={`col-start-1 row-start-1 relative whitespace-nowrap text-transparent bg-clip-text bg-gradient-to-r ${current.gradient} transition-all duration-500 ease-out drop-shadow-[0_10px_25px_rgba(59,130,246,0.35)] pointer-events-auto ${
+              className={`col-start-1 row-start-1 relative text-transparent bg-clip-text bg-gradient-to-r ${current.gradient} transition-all duration-500 ease-out drop-shadow-[0_10px_25px_rgba(59,130,246,0.35)] pointer-events-auto ${
                 fade
                   ? 'opacity-100 translate-y-0 scale-100 blur-0'
                   : 'opacity-0 -translate-y-3 scale-95 blur-sm'
@@ -63,7 +66,7 @@ const SphereText = () => {
             >
               {current.text}.
               <span
-                className={`absolute left-0 -bottom-2 h-[3px] w-full rounded-full bg-gradient-to-r ${current.gradient} opacity-0 hover:opacity-80 transition-opacity duration-300 blur-[2px]`}
+                className={`absolute left-0 -bottom-1 h-[3px] w-full rounded-full bg-gradient-to-r ${current.gradient} opacity-0 hover:opacity-80 transition-opacity duration-300 blur-[2px]`}
               />
             </span>
           </span>

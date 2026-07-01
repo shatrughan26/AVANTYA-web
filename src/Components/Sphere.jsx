@@ -1,42 +1,42 @@
 import React, { useEffect, useRef, useState } from 'react';
 import SphereText from './SphereText';
 
-// Set count directly to 650 for a dense, immersive matrix of stars
-export default function Sphere({ count = 1000 }) {
+export default function Sphere({ count = 2000 }) {
   const containerRef = useRef(null);
   const [points, setPoints] = useState([]);
   const rotationRef = useRef({ alpha: 0, beta: 0 });
+  
+  // Track separate X and Y dimensions for the sphere projection
+  const [dimensions, setDimensions] = useState({ width: 0, height: 0, radiusX: 0, radiusY: 0 });
 
-  // Responsive sizing state
-  const [dimensions, setDimensions] = useState({ width: 0, height: 0, radius: 0 });
-
-  // Handle window resizing dynamically, with breakpoint-aware scaling
   useEffect(() => {
     const handleResize = () => {
       const w = window.innerWidth;
       const h = window.innerHeight;
 
-      let radiusFactor;
-      let baseDimension;
+      let radiusFactorX;
+      let radiusFactorY;
 
       if (w < 640) {
-        // Mobile: use width as the base (avoids huge radius on tall narrow screens)
-        // and a smaller factor so the sphere doesn't dominate/overflow vertically
-        baseDimension = w;
-        radiusFactor = 0.85;
+        // Mobile: Stretch vertically (Factor Y > Factor X) so it fills long smartphone screens completely
+        radiusFactorX = 1.65; 
+        radiusFactorY = 2.4; 
       } else if (w < 1024) {
         // Tablet
-        baseDimension = Math.max(w, h);
-        radiusFactor = 0.55;
+        radiusFactorX = 1.15;
+        radiusFactorY = 1.15;
       } else {
-        // Desktop
-        baseDimension = Math.max(w, h);
-        radiusFactor = 0.65;
+        // Desktop: Keep it a perfect uniform sphere
+        radiusFactorX = 1.35;
+        radiusFactorY = 1.35;
       }
 
-      const maxRadius = baseDimension * radiusFactor;
-
-      setDimensions({ width: w, height: h, radius: maxRadius });
+      setDimensions({ 
+        width: w, 
+        height: h, 
+        radiusX: w * radiusFactorX, 
+        radiusY: w * radiusFactorY 
+      });
     };
 
     handleResize();
@@ -47,7 +47,7 @@ export default function Sphere({ count = 1000 }) {
   // Generate the dense array of points using Fibonacci distribution
   useEffect(() => {
     const p = [];
-    const phi = Math.PI * (3 - Math.sqrt(5)); // Golden ratio angle
+    const phi = Math.PI * (3 - Math.sqrt(5));
 
     for (let i = 0; i < count; i++) {
       const y = 1 - (i / (count - 1)) * 2;
@@ -66,7 +66,6 @@ export default function Sphere({ count = 1000 }) {
   useEffect(() => {
     let animationFrameId;
     const updateRotation = () => {
-      // Extremely slow, atmospheric rotation speeds
       rotationRef.current.alpha += 0.0006;
       rotationRef.current.beta += 0.0003;
 
@@ -78,22 +77,23 @@ export default function Sphere({ count = 1000 }) {
     return () => cancelAnimationFrame(animationFrameId);
   }, []);
 
-  const { radius } = dimensions;
+  const { radiusX, radiusY } = dimensions;
 
   return (
-    <div className="relative flex items-center justify-center h-[70vh] sm:h-[80vh] lg:h-screen w-full bg-black overflow-hidden z-0">
+    <div className="relative flex items-center justify-center h-screen w-full bg-black overflow-hidden z-0">
 
       {/* Large Floating Typography Layer */}
       <SphereText />
 
       {/* Screen-filling Cosmic Sphere Layer */}
+      {/* Centered on screen, letting the vertical stretching overflow the top and bottom safely */}
       <div
         ref={containerRef}
-        className="absolute inset-0 flex items-center justify-center pointer-events-none opacity-45 mix-blend-screen"
+        className="absolute inset-0 flex items-center justify-center pointer-events-none"
       >
         <div
           className="relative flex-shrink-0"
-          style={{ width: radius * 2, height: radius * 2 }}
+          style={{ width: radiusX * 2, height: radiusY * 2 }}
         >
           {points.map((point, index) => {
             const { alpha, beta } = rotationRef.current;
@@ -109,14 +109,14 @@ export default function Sphere({ count = 1000 }) {
             const x2 = point.x * cosA - z1 * sinA;
             const z2 = z1 * cosA + point.x * sinA;
 
-            // Project 3D values onto flat 2D viewport coordinates
-            const screenX = x2 * radius + radius;
-            const screenY = y1 * radius + radius;
+            // FIX: Map projections cleanly to independent X and Y radii scaling matrices
+            const screenX = x2 * radiusX + radiusX;
+            const screenY = y1 * radiusY + radiusY;
 
             // Dynamic depth values
             const depth = (z2 + 1) / 2;
             const scale = 0.25 + depth * 0.75;
-            const opacity = 0.02 + depth * 0.98; // Far dots blend softly out of existence
+            const opacity = 0.02 + depth * 0.98;
 
             return (
               <div
@@ -125,13 +125,11 @@ export default function Sphere({ count = 1000 }) {
                 style={{
                   left: `${screenX}px`,
                   top: `${screenY}px`,
-                  // Keeps points looking sharp and non-blurry as they move
-                  width: `${3.2 * scale}px`,
-                  height: `${3.2 * scale}px`,
+                  width: `${4.5 * scale}px`,
+                  height: `${4.5 * scale}px`,
                   opacity: opacity,
                   transform: 'translate(-50%, -50%)',
-                  // Soft neon core light glow applied only to closest stars
-                  boxShadow: depth > 0.88 ? '0 0 6px rgba(255, 255, 255, 0.5)' : 'none'
+                  boxShadow: depth > 0.88 ? '0 0 8px rgba(255, 255, 255, 0.6)' : 'none'
                 }}
               />
             );
